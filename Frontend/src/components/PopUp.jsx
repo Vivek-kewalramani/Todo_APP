@@ -12,8 +12,7 @@ function PopUp({onSubmit,oldTodo,onClose }) {
   {
     if(dat=='')return
     const arr=dat.split('/').reverse()
-     let zero='0'
-     arr[1]=zero+arr[1]
+     arr[1]=arr[1].padStart(2,'0')
      return (arr[0]+'-'+arr[1]+'-'+arr[2])
   }
   return (

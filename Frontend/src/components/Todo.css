@@ -1,47 +1,85 @@
-#t1{
-    display: grid;
-    gap: 8px;
-    margin: 0 10%;
-    margin-top: -3%
+.mainT{
+    background-color: rgb(251, 250, 251);
+    height: 120vh;
+    border-radius: 5px;
+    margin: -2% 10% 8%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+
 }
-#t1a{
+.t1{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 90%;
+    height: 95%;
+    box-shadow: 0 4px 7px rgba(15, 23, 42, 0.28);
+    
+    
+}
+.t1 :hover{
+    background-color: rgb(244, 237, 244);
+}
+.t1a{
     display: grid;
     grid-template-columns: 48px minmax(220px, 320px) minmax(180px, 240px) 1fr;
     align-items: center;
-    column-gap: 10px;
-    margin: 0;
+    column-gap: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
     border-radius: 5px;
-    padding: 10px 16px;
+    padding: 15px 26px;
     min-height: 60px;
     box-sizing: border-box;
     color: white;
-    background-color: rgb(95, 41, 142);
+    background-color: rgb(251, 250, 251);
+    box-shadow: 0 4px 7px rgba(15, 23, 42, 0.28);
+    width: 95%;
+    
+}
+.t1a h3{
+    color: black;
+ 
 }
 .icon{
     display: flex;
     align-items: center;
+    color: rgb(158, 149, 149);
 }
-#t3{
+.t3{
     display: flex;
     align-items: center;
     gap: 8px;
     min-width: 0;
 }
-#t2{
-    display: contents;
+.t2{
+    text-align: left;
 }
-#t2 h3,
-#t2 p,
-#t3 p {
+.t2 p{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: medium;
+}
+.t2 p,
+.t3 p {
     margin: 0;
+    color: black;
 }
-#t2 p,
-#t3 p {
+.t2 p,
+.t3 p {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-#btn{
+.t3 p{
+    font-size:85%;
+    color: rgb(91, 89, 89);
+}
+.btn{
     width: 36px;
     height: 36px;
     padding: 7px;
@@ -51,32 +89,45 @@
     color: white;
     border: 0;
     background: transparent;
+    background-color: red;
     cursor: pointer;
+    
 }
-#del_Edit
+.del_Edit :hover{
+    transform: translateY(-1px);
+    
+}
+.del_Edit
 {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     justify-self: end;
     gap: 8px;
+    transition: background-color 150ms ease, transform 150ms ease;
 }
-#editIcon{
+.editIcon{
     display: flex;
+    
+    
 }
-#editIcon button {
+.editIcon button :hover{
+    transform: translateY(-1px);
+}
+.editIcon button {
     width: 36px;
     height: 36px;
     padding: 8px;
     /* display: inline-flex;
     align-items: center;
     justify-content: center; */
-    color: white;
+    color: rgb(191, 178, 178);
     border: 0;
     background: transparent;
     cursor: pointer;
+    transition: background-color 150ms ease, transform 150ms ease;
 }
-#editIcon svg {
+.editIcon svg {
     width: 20px;
     height: 20px;
 }

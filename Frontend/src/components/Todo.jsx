@@ -1,23 +1,24 @@
 import "./Todo.css";
 import { HiPencil } from "react-icons/hi";
-import { FiTrash, FiTrash2 } from "react-icons/fi";
+import { toast } from 'react-toastify';
 function Todo(props) {
   return (
     <>
-      <div id="t1">
+    <div className="mainT">
+      <div className="t1">
         {props.tod.map((x, index) => (
-          <div id="t1a" key={x.id}>
-            <div id="t2">
+          <div className="t1a" key={x.id}>
               <h3>{index + 1}.</h3>
-              <p>{x.Title}</p>
-            </div>
-            <div id="t3">
+              <div className="t2">
+                <p>{x.Title}</p>
+              </div>
+            <div className="t3">
               <div className="icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  strokeWidth={1.5}
+                  strokeWclassNameth={1.5}
                   stroke="currentColor"
                   className="size-4"
                 >
@@ -30,10 +31,10 @@ function Todo(props) {
               </div>
               <p key={x.id}>{x.Deadline}</p>
             </div>
-            <div id="del_Edit">
+            <div className="del_Edit">
               <div>
                 <button
-                  id="btn"
+                  className="btn"
                   onClick={async () => {
                     const resp = await fetch("http://localhost:8080/delete", {
                       method: "DELETE",
@@ -45,6 +46,7 @@ function Todo(props) {
                       }),
                     });
                     const final = await resp.json();
+                    toast.success(final.msg)
                     props.render((r) => !r);
                     //  alert(final.msg)
                   }}
@@ -56,10 +58,10 @@ function Todo(props) {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-trash preview-icon"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-trash preview-icon"
                   >
                     <path d="M10 11v6" />
                     <path d="M14 11v6" />
@@ -69,10 +71,10 @@ function Todo(props) {
                   </svg>
                 </button>
               </div>
-              <div id="editIcon">
+              <div className="editIcon">
                 <button
                   aria-label="Edit"
-                  className="p-2 text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-full transition-colors inline-flex items-center justify-center"
+                  className="p-2 hover:text-blue-600 hover:bg-gray-100 rounded-full transition-colors inline-flex items-center justify-center"
                   onClick={() => props.open(x)}
                 >
                   <HiPencil className="w-5 h-5" />
@@ -82,6 +84,7 @@ function Todo(props) {
           </div>
         ))}
       </div>
+    </div>
     </>
   );
 }

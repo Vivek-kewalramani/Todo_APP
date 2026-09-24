@@ -1,6 +1,7 @@
 import Todo from "./components/Todo";
 import PopUp from "./components/PopUp";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+import { toast, ToastContainer } from 'react-toastify';
 import "./App.css";
 function App() {
   const [todo, setTodo] = useState([
@@ -8,71 +9,74 @@ function App() {
   const [isVisible, setVisibility] = useState(false);
   const [isEdit, setedit] = useState(false);
   const [editTodo, setEditTodo] = useState(null);
-  const [isRender,setRender]=useState(false)
+  const [isRender, setRender] = useState(false)
+  const [firstRender,setFirst]=useState()
   useEffect(() => {
-    async function fetchData()
-    {
-    const res=await fetch('http://localhost:8080/todos')
-    const result=await res.json()
-   //alert(result.msg)
-    const data=result.data
-     console.log(data)
-    if(data.length>0)
-    {
-    setTodo(data.map((x)=>{
-      const [year, month, day] = x[2].split("-");
-      let r={
-        id:x[0],
-        Title:x[1],
-        Deadline:`${Number(day)}/${Number(month)}/${year}`
+    async function fetchData() {
+      const res = await fetch('http://localhost:8080/todos')
+      const result = await res.json()
+      //alert(result.msg)
+      const data = result.data
+      console.log(data)
+      if (data.length > 0) {
+        setTodo(data.map((x) => {
+          const [year, month, day] = x[2].split("-");
+          let r = {
+            id: x[0],
+            Title: x[1],
+            Deadline: `${Number(day)}/${Number(month)}/${year}`
+          }
+          return r;
+        }))
+        //setFirst(result.msg)
       }
-      return r;
-    }))
-   }
-   else
-   {
-    setTodo([])
-   }
+      else {
+        setTodo([])
+        setFirst('No data to display')
+      }
+      
     }
     fetchData()
   }, [isRender])
+  useEffect(()=>{
+    toast.success(firstRender)
+  },[firstRender])
   async function saveTodo(task, deadline) {
+    let final;
     if (!isEdit) {
       if (!task || !deadline) {
-        //alert("Please enter valid input");
+        toast.warn('Please add valid input')
         return;
       }
       //console.log(todo)
-      const res=await fetch('http://localhost:8080/post',{
-        method:"POST",
-        headers:{
-          "Content-type":"application/json"
+      const res = await fetch('http://localhost:8080/post', {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json"
         },
         body: JSON.stringify({
           user_task: task,
-          user_deadline:deadline
+          user_deadline: deadline
         })
       })
-      const final=await res.json()
-      //alert(final.msg)
-      //let idCount = todo.length>0?todo[todo.length - 1].id + 1:1
-      //setTodo((t)=>[...t, { id: idCount, Title: task, Deadline: deadline }]);
+      final = await res.json()
+
     }
-    else{
+    else {
       //  console.log(task)
-       const resp=await fetch('http://localhost:8080/edit',
+      const resp = await fetch('http://localhost:8080/edit',
         {
-          method:"PATCH",
-          headers:{
-            'Content-type':'application/json'
+          method: "PATCH",
+          headers: {
+            'Content-type': 'application/json'
           },
-          body:JSON.stringify({
-            user_task:task,
-            user_id:editTodo.id
+          body: JSON.stringify({
+            user_task: task,
+            user_id: editTodo.id
           })
         }
-       )
-       const final=await resp.json()
+      )
+      final = await resp.json()
       //alert(final.msg)
       // setTodo((t)=>
       //   t.map((x)=>{
@@ -83,10 +87,12 @@ function App() {
       //     return x
       //   })
       // )
+
       setEditTodo(null)
     }
+    toast.success(final.msg)
     setVisibility(false);
-    setRender(r=>!r)
+    setRender(r => !r)
   }
   function openPopup() {
     setVisibility(true);
@@ -100,7 +106,7 @@ function App() {
   return (
     <>
       <div className="heading-title">
-           <h1>Todo App</h1>
+        <h1>Todo App</h1>
       </div>
       <div id="d">
         <div id="d2">
@@ -112,9 +118,9 @@ function App() {
           </button>
         </div>
       </div>
-      {todo.length>0? (
+      {todo.length > 0 ? (
         <Todo tod={todo} update={setTodo} open={getDetails} render={setRender}></Todo>
-      ):<p>Please add tasks</p>}
+      ) : <p>Please add tasks</p>}
       {isVisible ? (
         <PopUp
           onSubmit={saveTodo}
@@ -125,6 +131,12 @@ function App() {
           }}
         />
       ) : null}
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        theme="dark"
+        pauseOnHover
+      />
     </>
   );
 }
