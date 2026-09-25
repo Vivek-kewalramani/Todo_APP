@@ -4,7 +4,7 @@ const app = express();
 import cors from "cors";
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.ORIGIN,
   }),
 );
  app.use(express.json());
@@ -15,7 +15,7 @@ app.get("/todos", async (req, res) => {
   try {
   const connect=await makeConnection();
   const result=await connect.execute(
-        "SELECT id,Title, TO_CHAR(Deadline,'YYYY-MM-DD') as Deadline FROM Todos order by created_at;"
+        "SELECT id,Title, Deadline as Deadline FROM Todos order by created_at;"
     );
   await connect.close()
   res.status(200).json(
@@ -45,7 +45,14 @@ app.post('/post',async (req,res)=>{
   try {
     const connect=await makeConnection()
   const result=await connect.execute(
-    `INSERT INTO Todos(id,Title,Deadline) Values(:Id,:title,TO_DATE(:expiry,'DD/MM/YYYY'))`,binds,{
+    `INSERT INTO Todos(id,Title,Deadline) Values(:Id,:title,
+    SYS_EXTRACT_UTC(
+    FROM_TZ(
+      TO_TIMESTAMP(:expiry || ' 23:59:59', 'DD/MM/YYYY HH24:MI:SS'), 
+      'Asia/Kolkata'
+    )
+  )
+    )`,binds,{
       autoCommit:true
     }
   )

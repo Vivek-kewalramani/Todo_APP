@@ -14,7 +14,6 @@ html,body{
     opacity: 1;
    height: 10vh;
    margin-top: 20px;
-   /* background-image: url('https://images.unsplash.com/photo-1722970651149-372e8c8a0109?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); */
    background-position: center;
 }
 #d{
@@ -63,4 +62,66 @@ button{
     border: 1px solid white;
     border-radius: 8px;
     padding: 4px;
+}
+
+.filter{
+    display: flex;
+    gap: 12px;
+    margin-top: -3%;
+    margin-left: 10%;
+    margin-bottom: 2%;
+}
+
+.picker{
+    width: fit-content;
+    box-sizing: border-box;
+    padding: 2px;
+    margin-bottom: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+}
+.filter-task-button{
+    width: fit-content;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #7c3aed;
+    color: white;
+    margin-bottom: 6px;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 4px;
+    cursor: pointer;
+    transition: background-color 150ms ease, transform 150ms ease;
+}
+.filter-task-button:hover{
+    transform: translateY(-1px);
+}
+.filter-task-button:disabled{
+    cursor: not-allowed;
+    background-color: rgb(244, 237, 244);
+    color: rgb(220, 201, 201);
+}
+.remove-filter-button
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    width: 50px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    background-color: #7c3aed;
+    color: white;
+    cursor: pointer;
+    transition: background-color 150ms ease, transform 150ms ease;
+}
+.remove-filter-button:hover{
+    transform: translateY(-1px);
+}
+.remove-filter-button:disabled{
+    cursor: not-allowed;
+    background-color: rgb(244, 237, 244);
+    color: rgb(220, 201, 201);
 }

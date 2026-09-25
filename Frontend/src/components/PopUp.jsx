@@ -10,9 +10,10 @@ function PopUp({onSubmit,oldTodo,onClose }) {
   const today = new Date().toISOString().split("T")[0];
   function splitDate(dat)
   {
-    if(dat=='')return
+    if((dat==''))return
     const arr=dat.split('/').reverse()
      arr[1]=arr[1].padStart(2,'0')
+     arr[2]=arr[2].padStart(2,'0')
      return (arr[0]+'-'+arr[1]+'-'+arr[2])
   }
   return (

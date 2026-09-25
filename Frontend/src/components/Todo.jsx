@@ -6,7 +6,14 @@ function Todo(props) {
     <>
     <div className="mainT">
       <div className="t1">
+       <div className="todo-header-row">
+        <span className="header-index">#</span>
+        <span className="header-title">Title</span>
+        <span className="header-deadline">Deadline</span>
+        <span className="header-actions">Actions</span>
+       </div>
         {props.tod.map((x, index) => (
+          
           <div className="t1a" key={x.id}>
               <h3>{index + 1}.</h3>
               <div className="t2">
@@ -18,7 +25,7 @@ function Todo(props) {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  strokeWclassNameth={1.5}
+                  strokeWidth={1.5}
                   stroke="currentColor"
                   className="size-4"
                 >

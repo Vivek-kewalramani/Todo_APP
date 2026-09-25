@@ -1,45 +1,65 @@
-.mainT{
-    background-color: rgb(251, 250, 251);
-    height: 120vh;
-    border-radius: 5px;
-    margin: -2% 10% 8%;
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
 
-}
 .t1{
+    background-color: rgb(251, 250, 251);
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-top: 30px;
+     margin: 1% 10% 8%;
     border-radius: 5px;
     cursor: pointer;
-    width: 90%;
-    height: 95%;
+    width: 80%;
     box-shadow: 0 4px 7px rgba(15, 23, 42, 0.28);
-    
-    
+    overflow: auto;
+    max-height:300px;
+    padding: 0 0 0 10px 0;
 }
-.t1 :hover{
+
+.todo-header-row {
+    display: grid;
+    grid-template-columns: 48px minmax(220px, 320px) minmax(180px, 240px) 1fr;
+    align-items: center;
+    column-gap: 5px;
+    margin-left: 10px;
+    padding: 10px 15px 5px; 
+    width: 95%;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #888888; 
+     position: sticky;
+    top: 0;
+    z-index: 10; 
+    background-color: rgb(251, 250, 251);
+}
+
+.header-actions {
+    margin-left: 110px;
+}
+.header-deadline{
+    margin-right: 120px;
+}
+.t1a:hover {
     background-color: rgb(244, 237, 244);
 }
+
 .t1a{
     display: grid;
     grid-template-columns: 48px minmax(220px, 320px) minmax(180px, 240px) 1fr;
     align-items: center;
     column-gap: 5px;
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 10px;
+    margin-right: 8px;
     margin-top: 15px;
     border-radius: 5px;
-    padding: 15px 26px;
+    padding: 15px 15px;
     min-height: 60px;
     box-sizing: border-box;
     color: white;
     background-color: rgb(251, 250, 251);
     box-shadow: 0 4px 7px rgba(15, 23, 42, 0.28);
     width: 95%;
+  
     
 }
 .t1a h3{
@@ -72,7 +92,7 @@
 .t2 p,
 .t3 p {
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow:ellipsis;
     white-space: nowrap;
 }
 .t3 p{
