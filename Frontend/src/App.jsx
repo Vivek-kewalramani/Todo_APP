@@ -1,12 +1,13 @@
 import Todo from "./components/Todo";
 import PopUp from "./components/PopUp";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import { FaFilterCircleXmark } from "react-icons/fa6";
 import "./App.css";
 function App() {
   const [todo, setTodo] = useState([
   ]);
+  const [filteredData,setFilteredData]=useState([]);
   const [isVisible, setVisibility] = useState(false);
   const [isEdit, setedit] = useState(false);
   const [editTodo, setEditTodo] = useState(null);
@@ -30,7 +31,7 @@ function App() {
       const data = result.data
       console.log(data)
       if (data.length > 0) {
-        setTodo(data.map((x) => {
+        const mappedData = data.map((x) => {
           const [year, month, day] = new Date(x[2]).toISOString().split("T")[0].split("-");
           let r = {
             id: x[0],
@@ -38,11 +39,15 @@ function App() {
             Deadline: `${Number(day)}/${Number(month)}/${year}`
           }
           return r;
-        }))
+        })
+        setTodo(mappedData)
+        setFilteredData(mappedData);
+        
         //setFirst(result.msg)
       }
       else {
         setTodo([])
+        setFilteredData([])
         setFirst('No data to display')
       }
 
@@ -143,6 +148,7 @@ function App() {
             }}>
           </input>
           <button className="filter-task-button" onClick={() => {
+    
             const [dateF, monthF, yearF] = formatString(fromPicker)
             //console.log(Number(dateF),Number(monthF),Number(yearF))
             const [dateT, monthT, yearT] = formatString(toPicker)
@@ -155,7 +161,7 @@ function App() {
               return
             }
             else {
-              setTodo(todo.filter((t) => {
+              setFilteredData(todo.filter((t) => {
                 const [dd, mm, yy] = Split(t.Deadline)
                 return (Number(mm) >= Number(monthF) && Number(mm) <= Number(monthT) ? (Number(mm) == Number(monthF) && Number(mm) == Number(monthT)) ? ((Number(dd) >= Number(dateF) && Number(dd) <= Number(dateT)) ? true : false) : ((Number(dd) >= Number(dateF)) || (Number(dd) <= Number(dateT)) ? true : false) : false)
               }
@@ -168,16 +174,16 @@ function App() {
             onClick={() => {
               setFromPicker('')
               setToPicker('')
-              setRender(r => !r)
+              // setRender(r => !r)
               setApplied(false)
             }}>
             <FaFilterCircleXmark size={20} />
           </button>
         </div>
       ) : null}
-      {todo.length > 0 ? (
-        <Todo tod={todo} update={setTodo} open={getDetails} render={setRender}></Todo>
-      ) : <p>Please add tasks</p>}
+      {(todo.length > 0) && (!isFilterApplied) ? (
+        <Todo tod={todo} open={getDetails} render={setRender}></Todo>
+      ) :(isFilterApplied && filteredData.length>0)  ? <Todo tod={filteredData}  open={getDetails} render={setRender}></Todo> : <p>Please add tasks</p>}
       {isVisible ? (
         <PopUp
           onSubmit={saveTodo}
