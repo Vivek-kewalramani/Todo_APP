@@ -103,7 +103,7 @@ function App() {
       //     return x
       //   })
       // )
-
+      clearFilter();
       setEditTodo(null)
     }
     toast.success(final.msg)
