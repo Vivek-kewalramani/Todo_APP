@@ -103,6 +103,7 @@ function App() {
       //     return x
       //   })
       // )
+      
       clearFilter();
       setEditTodo(null)
     }
