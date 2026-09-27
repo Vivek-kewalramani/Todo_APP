@@ -55,6 +55,12 @@ function Todo(props) {
                     const final = await resp.json();
                     toast.success(final.msg)
                     props.render((r) => !r);
+                    console.log('delete')
+                    if(props.isFilter)
+                    {
+                    props.clearFilter();
+                    }
+                    
                     //  alert(final.msg)
                   }}
                 >

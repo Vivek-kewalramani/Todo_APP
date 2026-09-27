@@ -115,9 +115,39 @@ function App() {
     setedit(false);
   }
   function getDetails(editingTodo) {
+    // setApplied(false)
     setVisibility(true);
     setedit(true);
     setEditTodo(editingTodo);
+  }
+  function applyFilter(){
+            console.log('filter called')
+            const [dateF, monthF, yearF] = formatString(fromPicker)
+            //console.log(Number(dateF),Number(monthF),Number(yearF))
+            const [dateT, monthT, yearT] = formatString(toPicker)
+            // console.log(Number(dateT),Number(monthT),Number(yearT))
+            if (Number(monthF) > Number(monthT)) {
+              toast.warn('Please enter valid date filter')
+              return
+            } else if ((Number(monthF) == Number(monthT)) && (Number(dateF) > Number(dateT))) {
+              toast.warn('Please enter valid date filter')
+              return
+            }
+            else {
+              setFilteredData(todo.filter((t) => {
+                const [dd, mm, yy] = Split(t.Deadline)
+                return (Number(mm) >= Number(monthF) && Number(mm) <= Number(monthT) ? (Number(mm) == Number(monthF) && Number(mm) == Number(monthT)) ? ((Number(dd) >= Number(dateF) && Number(dd) <= Number(dateT)) ? true : false) : ((Number(dd) >= Number(dateF)) || (Number(dd) <= Number(dateT)) ? true : false) : false)
+              }
+              ))
+            }
+            setApplied(true)
+          }
+  function clearFilter()
+  {
+    setFromPicker('')
+    setToPicker('')
+              // setRender(r => !r)
+    setApplied(false)
   }
   return (
     <>
@@ -147,28 +177,7 @@ function App() {
               setToPicker((e.target.value))
             }}>
           </input>
-          <button className="filter-task-button" onClick={() => {
-    
-            const [dateF, monthF, yearF] = formatString(fromPicker)
-            //console.log(Number(dateF),Number(monthF),Number(yearF))
-            const [dateT, monthT, yearT] = formatString(toPicker)
-            // console.log(Number(dateT),Number(monthT),Number(yearT))
-            if (Number(monthF) > Number(monthT)) {
-              toast.warn('Please enter valid date filter')
-              return
-            } else if ((Number(monthF) == Number(monthT)) && (Number(dateF) > Number(dateT))) {
-              toast.warn('Please enter valid date filter')
-              return
-            }
-            else {
-              setFilteredData(todo.filter((t) => {
-                const [dd, mm, yy] = Split(t.Deadline)
-                return (Number(mm) >= Number(monthF) && Number(mm) <= Number(monthT) ? (Number(mm) == Number(monthF) && Number(mm) == Number(monthT)) ? ((Number(dd) >= Number(dateF) && Number(dd) <= Number(dateT)) ? true : false) : ((Number(dd) >= Number(dateF)) || (Number(dd) <= Number(dateT)) ? true : false) : false)
-              }
-              ))
-            }
-            setApplied(true)
-          }}
+          <button className="filter-task-button" onClick={() => applyFilter()}
             disabled={((fromPicker == '') || (toPicker == '')) ? true : false}>Apply Filter</button>
           <button className="remove-filter-button" disabled={isFilterApplied ? false : true}
             onClick={() => {
@@ -183,7 +192,7 @@ function App() {
       ) : null}
       {(todo.length > 0) && (!isFilterApplied) ? (
         <Todo tod={todo} open={getDetails} render={setRender}></Todo>
-      ) :(isFilterApplied && filteredData.length>0)  ? <Todo tod={filteredData}  open={getDetails} render={setRender}></Todo> : <p>Please add tasks</p>}
+      ) :(isFilterApplied && filteredData.length>0)  ? <Todo tod={filteredData}  open={getDetails} render={setRender} clearFilter={clearFilter} isFilter={isFilterApplied}></Todo> : <p>Please add tasks</p>}
       {isVisible ? (
         <PopUp
           onSubmit={saveTodo}
