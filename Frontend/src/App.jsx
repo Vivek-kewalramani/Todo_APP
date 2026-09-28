@@ -168,12 +168,12 @@ function App() {
       {todo.length > 0 ? (
         <div className="filter">
           <h3>From</h3>
-          <input type="date" className="picker" min={today} value={fromPicker} onChange={
+          <input type="date" className="picker" value={fromPicker} onChange={
             (e) => {
               setFromPicker((e.target.value))
             }}></input>
           <h3>To</h3>
-          <input type="date" className="picker" min={today} value={toPicker} onChange={
+          <input type="date" className="picker"  value={toPicker} onChange={
             (e) => {
               setToPicker((e.target.value))
             }}>
@@ -193,7 +193,7 @@ function App() {
       ) : null}
       {(todo.length > 0) && (!isFilterApplied) ? (
         <Todo tod={todo} open={getDetails} render={setRender}></Todo>
-      ) :(isFilterApplied && filteredData.length>0)  ? <Todo tod={filteredData}  open={getDetails} render={setRender} clearFilter={clearFilter} isFilter={isFilterApplied}></Todo> : <p>Please add tasks</p>}
+      ) :(isFilterApplied && filteredData.length>0)  ? <Todo tod={filteredData}  open={getDetails} render={setRender} clearFilter={clearFilter} isFilter={isFilterApplied}></Todo> : filteredData.length==0 ?<p>No data to display</p>:<p>Please add tasks</p>}
       {isVisible ? (
         <PopUp
           onSubmit={saveTodo}
